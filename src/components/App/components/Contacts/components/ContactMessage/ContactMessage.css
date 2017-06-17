@@ -1,0 +1,57 @@
+.ContactMessage {
+	height: 5rem;
+	padding: .5rem 1rem;
+	box-sizing: border-box;
+	display: flex;
+	border-bottom: 1px solid #DDD;
+	cursor: pointer;
+}
+
+.ContactMessage .img {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 100%;
+	margin: .5rem 1rem .5rem .5rem;
+	overflow: hidden;
+}
+
+.ContactMessage .img img {
+	width: 100%;
+}
+
+.ContactMessage .Content {
+	flex: 1 1 0;
+	overflow: hidden;
+	white-space: nowrap;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.ContactMessage .Content p {
+	margin: 0;
+}
+
+.ContactMessage .Info {
+	text-align: right;
+	padding-top: .7rem;
+}
+
+.ContactMessage .Info time {
+	display: block;
+	font-size: .8rem;
+}
+
+.ContactMessage .Info[data-unread] time {
+	color: #09D261;
+}
+
+.ContactMessage .Info span {
+	background: #09D261;
+	color: white;
+	font-size: .7rem;
+	height: 1em;
+	line-height: 1em;
+	padding: .2rem .4rem;
+	border-radius: 1rem;
+	display: inline-block;
+}

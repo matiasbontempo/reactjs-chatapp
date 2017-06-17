@@ -1,0 +1,26 @@
+.Message {
+	background: #FFF;
+	box-shadow: 0 2px 8px -2px rgba(0,0,0,.3);
+	margin: 0 0 .2rem;
+	padding: .6rem 1rem .8rem;
+	box-sizing: border-box;
+	border-radius: .3rem;
+	width: 80%;
+	overflow: hidden;
+}
+
+.Message.self {
+	background: #E1FFC7;
+	margin-left: 20%;
+
+}
+
+.Message:not(.self) + .Message.self, .Message.self + .Message:not(.self) {
+	margin-top: 1rem;
+}
+
+.Message time {
+	float: right;
+	opacity: .8;
+	font-size: .7rem;
+}

@@ -1,0 +1,36 @@
+.Profile .ProfileImg {
+    width: 12rem;
+    height: 12rem;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+.Profile .ProfileImg .ImageContainer {
+	height: 100%;
+	width: 100%;
+	border-radius: 100%;
+	background-position: center;
+	background-size: cover;
+}
+
+.Profile .ProfileImg input[type='file'] {
+	display: none;
+}
+
+.Profile .ProfileImg label {
+	position: absolute;
+	bottom: -.5rem;
+	right: -.5rem;
+	background: #075E54;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.Profile .ProfileImg label img {
+	height: 50%;
+	width: 50%;
+}

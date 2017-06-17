@@ -1,0 +1,45 @@
+.ChatView {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 0;
+}
+
+.ChatView .Messages {
+	flex: 1 1 0;
+	margin-bottom: .5rem;
+	overflow-y: scroll;
+	padding: .5rem .8rem 0;
+}
+
+.ChatView .Input {
+	display: flex;
+	padding: 0 1rem 1rem;
+}
+
+.ChatView .Input input {
+	border-radius: 2rem;
+	flex: 1 1 0;
+	font-size: 1rem;
+	height: 3.5rem;
+	margin: 0 1rem 0 0;
+	padding: 1rem;
+}
+
+.ChatView .Input button {
+	align-items: center;
+	background: #075E54;
+	border-radius: 1.75rem;
+	display: flex;
+	flex-basis: 3.5rem;
+	height: 3.5rem;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+}
+
+.ChatView button img {
+	height: 60%;
+	width: 60%;
+}

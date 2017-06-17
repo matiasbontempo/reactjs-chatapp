@@ -1,0 +1,44 @@
+.App {
+	height: 100%;
+	overflow: hidden;
+}
+
+.box {
+	display: block;
+	background: #FFF;
+	margin: .5rem .5rem 1rem;
+	padding: 1rem 1.2rem;
+	box-sizing: border-box;
+	border-radius: .3rem;
+	overflow: auto;
+}
+
+.box h1 {
+	margin: 0;
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+	font-weight: 300;
+}
+
+input[type='text'], input[type='password'] {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	border-radius: .3rem;
+	border: 1px solid #CCC;
+	padding: .5rem 1rem;
+	margin-bottom: .5rem;
+}
+
+button {
+	background: #20C659;
+	color: #FFF;
+	border-radius: 5px;
+	border: none;
+	padding: .5rem 1rem;
+	margin: .5rem 0 0;
+}
+
+.pull-right {
+	float: right;
+}
