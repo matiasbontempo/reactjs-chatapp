@@ -19,7 +19,7 @@ class Signup extends Component {
 			<section className="Signup">
 				<form onSubmit={this.onCreateUser.bind(this)} className="box">
 					<h1>Signup</h1>
-					<small>{this.state.error}</small>
+					<small className="error">{this.state.error}</small>
 					<input type="text" placeholder="Email" ref="email"/>
 					<input type="password" placeholder="Password" ref="pass1"/>
 					<input type="password" placeholder="Repeat Password" ref="pass2"/>

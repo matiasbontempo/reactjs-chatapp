@@ -20,6 +20,12 @@
 	font-weight: 300;
 }
 
+.box .error {
+	color: red;
+    margin: 10px 0px;
+    display: block;
+}
+
 input[type='text'], input[type='password'] {
 	display: block;
 	box-sizing: border-box;

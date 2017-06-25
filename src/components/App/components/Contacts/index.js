@@ -18,8 +18,6 @@ class Contacts extends Component {
 
 	componentWillMount() {
 
-		this.props.setLoading(true);
-
 		this.props.setHeader({
 			title: "ChatApp",
 			overflow: [
@@ -41,7 +39,6 @@ class Contacts extends Component {
 			tmpFriends[snapshot.key] = {...snapshot.val()}
 			tmpFriends.sort((a,b) => a.time > b.time);
 			this.setState({	friends: tmpFriends	});
-			this.props.setLoading(false);
 		}, error => console.log(error));
 
 		this.firebaseRef.on("child_changed", (snapshot) => {
@@ -49,7 +46,6 @@ class Contacts extends Component {
 			tmpFriends[snapshot.key] = {...snapshot.val()}
 			tmpFriends.sort((a,b) => a.time > b.time);
 			this.setState({	friends: tmpFriends	});
-			this.props.setLoading(false);
 		}, error => console.log(error));
 
 	}

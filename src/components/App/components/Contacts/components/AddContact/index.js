@@ -40,27 +40,35 @@ class AddContact extends Component {
 	}
 
 	handleFindSubmit(e) {
+
+		if (!this.refs.username.value) return;
+
 		const dbRef = firebase.database();
 		e.preventDefault();
-		this.props.startLoading();
+
+		this.props.setLoading(true);
+		
 		dbRef.ref("/users/").orderByChild("userName").equalTo(this.refs.username.value).once("value")
 			.then((snapshot)=>{
 				const newFriend = {};
 				newFriend[Object.keys(snapshot.val())[0]] = false;
 				return dbRef.ref("/friends/"+firebase.auth().currentUser.uid).update(newFriend);
+				
 			})
-			.then(() => console.log("New friend!"))
+			.then(() => this.handleAddClick())
 			.catch(err => {
 				console.log(err);
-			});
+			})
+			.then(() => this.props.setLoading(false));
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		startLoading: () => {
+		setLoading: (isLoading) => {
 			dispatch({
-				type: "START_LOADING"
+				type: "set_LOADING",
+				payload: isLoading
 			});
 		}
 	}

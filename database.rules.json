@@ -1,27 +1,12 @@
 {
-  "rules": {
-    ".read": false,
-    ".write": false,
-    "users": {
-      "$uid": {
-        ".read": true,
-        ".write": "auth.uid == $uid"
-      }
-    },
-    "lastMessages": {
-      "$mainId": {
-        ".read": "auth.uid == $mainId",
-        ".write": "auth.uid == $mainId",
-        "$otherId": {
-          ".write": "root.child('/users/'+auth.uid+'/contacts/'+$mainId).exists()"
-        }
-      }
-    },
-    "rooms": {
-      "$rid": {
-        ".read": "root.child('/users/'+auth.uid+'/rooms/'+$rid).exists()",
-        ".write": "root.child('/users/'+auth.uid+'/rooms/'+$rid).exists()"
-      }
-    }
-  }
+	"rules": {
+		".read": "auth.uid !== null",
+		".write": "auth.uid !== null",
+		"users": {
+			".indexOn": ["userName"],
+			"$uid": {
+				".write": "auth.uid === $uid"
+			}
+		}
+	}
 }

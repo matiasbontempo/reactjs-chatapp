@@ -25,7 +25,7 @@ class Login extends Component {
 			<section className="Login">
 				<form onSubmit={this.onLoginUser.bind(this)} className="box">
 					<h1>Login</h1>
-					<small>{this.state.error}</small>
+					<small className="error">{this.state.error}</small>
 					<input type="text" placeholder="Email" ref="email" />
 					<input type="password" placeholder="Password" ref="pass" />
 					<button className="pull-right">Login</button>
