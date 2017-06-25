@@ -28,7 +28,7 @@ class App extends Component {
 						<ConditionalRoute path="/login" redirect="/contacts" condition={!(this.props.user.uid)} component={Login} />
 						<ConditionalRoute path="/profile" redirect="/login" condition={(this.props.user.uid)} component={Profile} />
 						<ConditionalRoute path="/contacts" redirect="/login" condition={(this.props.user.uid)} component={Contacts} />
-						<ConditionalRoute path="/chat/:name" redirect="/login" condition={(this.props.user.uid)} component={Chat} />
+						<ConditionalRoute path="/chat/:chatId/:friendId" redirect="/login" condition={(this.props.user.uid)} component={Chat} />
 						<Route path="/logout" component={Logout}></Route>
 					</Container>
 				</div>

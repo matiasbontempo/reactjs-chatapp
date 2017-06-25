@@ -20,7 +20,6 @@ class Profile extends Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props.user);
 		this.props.setHeader({
 			title: "Ajustes",
 			path: "/contacts"

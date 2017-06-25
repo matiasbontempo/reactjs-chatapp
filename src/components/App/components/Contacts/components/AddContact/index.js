@@ -46,7 +46,7 @@ class AddContact extends Component {
 		dbRef.ref("/users/").orderByChild("userName").equalTo(this.refs.username.value).once("value")
 			.then((snapshot)=>{
 				const newFriend = {};
-				newFriend[Object.keys(snapshot.val())[0]] = true;
+				newFriend[Object.keys(snapshot.val())[0]] = false;
 				return dbRef.ref("/friends/"+firebase.auth().currentUser.uid).update(newFriend);
 			})
 			.then(() => console.log("New friend!"))

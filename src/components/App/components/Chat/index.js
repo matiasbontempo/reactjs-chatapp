@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import firebase from 'firebase';
 
 import Message from './components/Message';
 
@@ -7,25 +8,46 @@ import './ChatView.css';
 
 class ChatView extends Component {
 
-	componentWillMount() {
-		this.props.setHeader({
-			title: "Matias",
-			img: "https://trello-avatars.s3.amazonaws.com/a201e2f221ba7c7cc70361d019a5a1d1/30.png",
-			path: "/contacts",
-			overflow: [
-				{
-					name: "Vaciar Chat",
-					path: "/empty"
-				},
-				{
-					name: "Bloquear",
-					path: "/block"
-				}				
-			]
-		});
+	constructor() {
+		super();
+		this.state = {
+			messages: []
+		}
 	}
 
-	componentDidMount() {
+	componentWillMount() {
+
+		if(!firebase.auth().currentUser) return;
+
+		const firebaseRef = firebase.database().ref("/chats/"+this.props.match.params.chatId+"/messages").limitToLast(50);
+
+		firebaseRef.on("child_added", (snapshot) => {
+			const tmpMessages = this.state.messages;
+			tmpMessages.push(snapshot.val());
+			this.setState({	messages: tmpMessages });
+		}, error => console.log(error));
+
+		firebase.database().ref("/users/"+this.props.match.params.friendId).once("value")
+			.then((snapshot) => {
+				this.props.setHeader({
+					title: snapshot.val().displayName,
+					img: snapshot.val().photoUrl,
+					path: "/contacts",
+					overflow: [
+						{
+							name: "Vaciar Chat",
+							path: "/empty"
+						},
+						{
+							name: "Bloquear",
+							path: "/block"
+						}				
+					]
+				});
+			});
+	}
+
+	componentDidUpdate() {
 		this.ScrollToBottom();
 	}
 
@@ -34,41 +56,39 @@ class ChatView extends Component {
 		objDiv.scrollTop = objDiv.scrollHeight;
 	}
 
+	renderMessages() {
+		return(
+			<div id="Messages" className="Messages">
+				{this.state.messages.map((message, i) => (<Message key={i} self={this.props.match.params.friendId !== message.owner} content={message.content} time={message.time}></Message>))}
+			</div>
+		);
+	}
+
 	render() {
 		return(
 			<div className="ChatView">
-				<div id="Messages" className="Messages">
-					Chat with: {this.props.match.params.name}
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-					<Message self={true} content={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad sed, dolorem quae! "} time={Date.now()}></Message>
-				</div>
-				<form className="Input">
-					<input type="text" placeholder="Escribe un mensaje..."/>
+				{this.renderMessages()}
+				<form onSubmit={this.handleMessageSubmit.bind(this)} className="Input">
+					<input type="text" placeholder="Escribe un mensaje..." ref="message"/>
 					<button><img src={"/img/ic_action_send.png"} alt=""/></button>
 				</form>
 			</div>
 		);
+	}
+
+	handleMessageSubmit(e) {
+		e.preventDefault();
+		if(!this.refs.message.value) return;
+
+		const newMessage = {
+			owner: firebase.auth().currentUser.uid,
+			content: this.refs.message.value,
+			time: Date.now()
+		}
+
+		this.setState({ messages: [...this.state.messages, newMessage]});
+		firebase.database().ref("/chats/"+this.props.match.params.chatId+"/messages").push(newMessage);
+		this.refs.message.value = "";
 	}
 }
 

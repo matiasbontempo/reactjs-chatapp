@@ -6,22 +6,22 @@ import './ContactMessage.css';
 export default class ContactMessage extends Component {
 
 	UnreadMessages() {
-		return this.props.info.unread ? <span>{this.props.info.unread}</span> : "";
+		return this.props.friendInfo.unread ? <span>{this.props.friendInfo.unread}</span> : "";
 	}
 
 	render() {
 		return(
-			<Link to={"/chat/" + this.props.info.displayName}>
+			<Link to={"/chat/" + this.props.chatId + "/" + this.props.friendInfo.friendId}>
 				<div className="ContactMessage">
 					<div className="img">
-						<img src={this.props.info.photoUrl} alt={this.props.info.displayName}/>
+						<img src={this.props.friendInfo.photoUrl} alt={this.props.friendInfo.displayName}/>
 					</div>
 					<div className="Content">
-						<strong>{this.props.info.displayName}</strong>
-						<p>{this.props.info.content}</p>
+						<strong>{this.props.friendInfo.displayName}</strong>
+						<p>{this.props.friendInfo.content}</p>
 					</div>
-					<div className="Info" data-unread={this.props.info.unread}>
-						<time>{this.props.info.time}</time>
+					<div className="Info" data-unread={this.props.friendInfo.unread}>
+						<time>{this.props.friendInfo.time}</time>
 						{this.UnreadMessages()}
 					</div>
 				</div>
