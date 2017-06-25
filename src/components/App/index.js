@@ -7,6 +7,7 @@ import Chat from './components/Chat';
 import ConditionalRoute from './components/ConditionalRoute';
 import Contacts from './components/Contacts';
 import Container from './components/Container';
+import Loading from './components/Loading';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Profile from './components/Profile';
@@ -19,7 +20,8 @@ class App extends Component {
 		return (
 			<Router>
 				<div className="App">
-					<ActionBar header={this.props.header}/>
+					<Loading condition={this.props.global.isLoading}></Loading>
+					<ActionBar header={this.props.global.header}/>
 					<Container>
 						<ConditionalRoute exact path="/" redirect="/profile" condition={!(this.props.user.uid)} component={Signup} />
 						<ConditionalRoute path="/signup" redirect="/profile" condition={!(this.props.user.uid)} component={Signup} />
@@ -37,8 +39,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.userReducer,
-		header: state.headerReducer
+		global: state.globalReducer,
+		user: state.userReducer
 	}
 };
 

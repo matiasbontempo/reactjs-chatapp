@@ -34,3 +34,8 @@
 	height: 50%;
 	width: 50%;
 }
+
+.Profile .error {
+	outline-color: red;
+	border: 1px solid red;
+}

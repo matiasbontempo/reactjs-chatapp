@@ -1,5 +1,7 @@
 .Contacts {
 	background: #FBFAFB;
+	padding-bottom: 5rem;
+	min-height: calc(100% - 5rem);
 }
 
 .Contacts a {

@@ -1,0 +1,36 @@
+.AddContact > button {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	align-items: center;
+	border-radius: 1.75rem;
+	display: flex;
+	flex-basis: 3.5rem;
+	height: 3.5rem;
+	width: 3.5rem;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	box-shadow: 0 .5rem 2rem -.25rem rgba(0,0,0,.5);
+}
+
+.AddContact > button img {
+	height: 2.5rem;
+	width: 2.5rem;
+}
+
+.AddContact .overlay {
+	align-items: center;
+	justify-content: center;
+}
+
+.AddContact .overlay .modal {
+	width: 85%;
+	height: auto;
+	box-sizing: border-box;
+}
+
+.AddContact h2 {
+	margin: .5rem 0 1.5rem;
+	font-weight: 400;
+}

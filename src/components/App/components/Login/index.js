@@ -45,6 +45,7 @@ class Login extends Component {
 		}
 
 		this.setState({error: null});
+		this.props.startLoading();
 
 		firebase.auth().signInWithEmailAndPassword(this.refs.email.value, this.refs.pass.value)
 			.catch(e => this.setState({error: e.message}));
@@ -59,6 +60,11 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch({
 				type: "SET_HEADER",
 				payload: header
+			});
+		},
+		startLoading: () => {
+			dispatch({
+				type: "START_LOADING"
 			});
 		}
 	}
